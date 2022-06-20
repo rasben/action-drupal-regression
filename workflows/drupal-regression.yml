@@ -1,0 +1,64 @@
+name: 'Drupal Regression'
+
+on: pull_request
+permissions: write-all
+
+jobs:
+  drupal-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: drupal-regression
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            :robot: :speech_balloon: `beep-boop. checking for drupal-regression - this will take a few minutes..` :hourglass_flowing_sand: :eyes:
+          edit-mode: replace
+          reactions: ${{ steps.drupal-regression.outputs.reactions }}
+      - uses: juliangruber/sleep-action@v1
+        with:
+          time: 3m
+      - uses: actions/checkout@v1
+      - uses: xendk/dais@main
+        with:
+          platform_id: ${{ secrets.DAIS_PLATFORMSH_ID }}
+          platform_key: ${{ secrets.DAIS_PLATFORMSH_KEY }}
+          files: ./.check-urls
+      - name: cat
+        run: |
+          cat ./.check-urls
+      - name: Drupal Regression
+        id: drupal-regression
+        uses: ./
+        with:
+          urls: ./.check-urls
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: drupal-regression
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc2.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ${{ steps.drupal-regression.outputs.message }}
+          edit-mode: replace
+          reactions: ${{ steps.drupal-regression.outputs.reactions }}
+      - name: Check for regression fail
+        if: ${{ steps.drupal-regression.outputs.status == 'fail' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Drupal Regression failed. See comment, or "Drupal Regression" above.')

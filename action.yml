@@ -1,0 +1,14 @@
+name: 'Drupal Regression'
+description: 'Using Drupal regression API.'
+inputs:
+  urls:
+    description: 'URLs to check baseline against'
+    required: true
+outputs:
+  diff:
+    description: 'The difference, if any'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.urls }}
