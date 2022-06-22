@@ -1,8 +1,11 @@
 name: 'Drupal Regression'
 
-on: pull_request
-permissions: write-all
-
+on:
+  workflow_call:
+    inputs:
+      PLATFORMSH_ID:
+        required: true
+        type: string
 jobs:
   drupal-regression:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
       - uses: actions/checkout@v1
       - uses: xendk/dais@main
         with:
-          platform_id: ${{ secrets.DAIS_PLATFORMSH_ID }}
+          platform_id: ${{ inputs.PLATFORMSH_ID }}
           platform_key: ${{ secrets.DAIS_PLATFORMSH_KEY }}
           files: ./.check-urls
       - name: cat
