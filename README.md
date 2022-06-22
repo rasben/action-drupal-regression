@@ -10,15 +10,13 @@ See https://github.com/reload/drupal-regression for the required Drupal Module.
 
 Example setup: https://github.com/reload/storypal/blob/main/.github/workflows/drupal-regression.yml
 
-```yml
-name: 'Drupal Regression'
+## Testing locally:
 
-on: pull_request
-permissions: write-all
+- Have python3 + pip3 installed
+- `pip3 install install wheel colorama requests validators pytidylib`
+- `python3 compare.py --url=https://some-remote-api-url.com --workdir=drupal-regression`
 
-jobs:
-  drupal-regression:
-    uses: reload/action-drupal-regression/.github/workflows/drupal-regression.yml@main
-    with:
-      PLATFORMSH_ID: CHANGE_ME
-```
+If you want to test with the exact, markdown output that GitHub Action uses:
+
+- `python3 compare.py --url=https://some-remote-api-url.com --workdir=drupal-regression --markdown=True --verbose=True`
+

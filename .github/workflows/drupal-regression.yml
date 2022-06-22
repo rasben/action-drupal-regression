@@ -6,6 +6,16 @@ on:
       PLATFORMSH_ID:
         required: true
         type: string
+      DAIS_URLS_FILE:
+        required: true
+        type: string
+      WORK_DIR:
+        type: string
+        default: './drupal-regression'
+    secrets:
+      PLATFORMSH_KEY:
+        required: true
+
 jobs:
   drupal-regression:
     runs-on: ubuntu-latest
@@ -33,16 +43,17 @@ jobs:
       - uses: xendk/dais@main
         with:
           platform_id: ${{ inputs.PLATFORMSH_ID }}
-          platform_key: ${{ secrets.DAIS_PLATFORMSH_KEY }}
-          files: ./.check-urls
+          platform_key: ${{ secrets.PLATFORMSH_KEY }}
+          files: ${{ inputs.DAIS_URLS_FILE }}
       - name: cat
         run: |
-          cat ./.check-urls
+          cat ${{ inputs.DAIS_URLS_FILE }}
       - name: Drupal Regression
         id: drupal-regression
-        uses: ./
+        uses: reload/action-drupal-regression@main
         with:
-          urls: ./.check-urls
+          urls: ${{ inputs.DAIS_URLS_FILE }}
+          work_dir: ${{ inputs.WORK_DIR }}
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc2

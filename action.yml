@@ -4,6 +4,9 @@ inputs:
   urls:
     description: 'URLs to check baseline against'
     required: true
+  work_dir:
+    description: 'The work dir to save regressions in. - defaults to drupal-regression'
+    default: 'drupal-regression'
 outputs:
   diff:
     description: 'The difference, if any'
@@ -12,3 +15,4 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.urls }}
+    - ${{ inputs.work_dir }}
