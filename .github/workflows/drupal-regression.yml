@@ -6,9 +6,6 @@ on:
       PLATFORMSH_ID:
         required: true
         type: string
-      DAIS_URLS_FILE:
-        required: true
-        type: string
       WORK_DIR:
         type: string
         default: './drupal-regression'
@@ -33,26 +30,20 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            :robot: :speech_balloon: `beep-boop. checking for drupal-regression - this will take a few minutes..` :hourglass_flowing_sand: :eyes:
+            :robot: :speech_balloon: `checking for drupal-regression - this can take a few minutes..`
           edit-mode: replace
           reactions: ${{ steps.drupal-regression.outputs.reactions }}
-      - uses: juliangruber/sleep-action@v1
-        with:
-          time: 3m
       - uses: actions/checkout@v1
-      - uses: xendk/dais@main
+      - uses: reload/action-platformsh-url@main
+        id: platformsh_url
         with:
-          platform_id: ${{ inputs.PLATFORMSH_ID }}
-          platform_key: ${{ secrets.PLATFORMSH_KEY }}
-          files: ${{ inputs.DAIS_URLS_FILE }}
-      - name: cat
-        run: |
-          cat ${{ inputs.DAIS_URLS_FILE }}
+          PLATFORMSH_ID: ${{ inputs.PLATFORMSH_ID }}
+          PLATFORMSH_KEY: ${{ secrets.PLATFORMSH_KEY }}
       - name: Drupal Regression
         id: drupal-regression
         uses: reload/action-drupal-regression@main
         with:
-          urls: ${{ inputs.DAIS_URLS_FILE }}
+          url: ${{ steps.platformsh_url.outputs.url }}
           work_dir: ${{ inputs.WORK_DIR }}
       - name: Find Comment
         uses: peter-evans/find-comment@v2

@@ -43,6 +43,9 @@ def main():
     if (valid_url != True):
       url = "http://local.docker"
 
+  # Remove trailing slashes.
+  url = url.strip('/')
+
   api_url = url + "/api/regression/content/all"
 
 
@@ -126,7 +129,13 @@ def main():
     os.mkdir(str(content_dir))
 
   # Loading the API endpoint from Drupal.
-  api = requests.get(api_url, headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}, timeout=15)
+  headers = {
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Mobile Safari/537.36'
+  }
+
+  api = requests.get(api_url, headers=headers, cookies={}, timeout=45)
 
   # Making sure the JSON is valid.
   if not validateJSON(api.content):
@@ -261,7 +270,7 @@ def main():
 
 
   # Lines below basically just presents the results.
-  return_message += txtmod.NEWLINE + txtmod.BOLD + "After checking " + txtmod.OKCYAN + url + txtmod.ENDBOLD + txtmod.ENDC + " the verdict is..." + txtmod.NEWLINE
+  return_message += txtmod.BOLD + url + txtmod.ENDBOLD + txtmod.NEWLINE
 
   failed = False
 
@@ -317,9 +326,9 @@ def main():
   # If we have experienced no issues, we'll inform the user that all's good, and set
   # a STATUSOK that GithubActions can understand - otherwise we'll say STATUSFAIL.
   if failed:
-    return_message += txtmod.NEWLINE + "STATUSFAIL"
+    return_message += " STATUSFAIL"
   else:
-    return_message += txtmod.NEWLINE + "STATUSOK"
+    return_message += " STATUSOK"
 
   # Printing the final message, to be used in the GitHub comment.
   print(return_message)

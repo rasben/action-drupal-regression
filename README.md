@@ -19,4 +19,3 @@ Example setup: https://github.com/reload/storypal/blob/main/.github/workflows/dr
 If you want to test with the exact, markdown output that GitHub Action uses:
 
 - `python3 compare.py --url=https://some-remote-api-url.com --workdir=drupal-regression --markdown=True --verbose=True`
-

@@ -1,8 +1,8 @@
 name: 'Drupal Regression'
 description: 'Using Drupal regression API.'
 inputs:
-  urls:
-    description: 'URLs to check baseline against'
+  url:
+    description: 'URL to check baseline against'
     required: true
   work_dir:
     description: 'The work dir to save regressions in. - defaults to drupal-regression'
@@ -14,5 +14,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.urls }}
+    - ${{ inputs.url }}
     - ${{ inputs.work_dir }}
