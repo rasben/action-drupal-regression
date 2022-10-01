@@ -270,7 +270,7 @@ def main():
 
 
   # Lines below basically just presents the results.
-  return_message += txtmod.BOLD + url + txtmod.ENDBOLD + txtmod.NEWLINE
+  return_message += txtmod.BOLD + api_url + txtmod.ENDBOLD + txtmod.NEWLINE
 
   failed = False
 
