@@ -274,11 +274,16 @@ def main():
 
   failed = False
 
-  if api_data['messages']['errors'] or html_errors:
+  error_messages = {}
+
+  if 'errors' in api_data['messages']:
+    error_messages = api_data['messages']['errors']
+
+  if error_messages or html_errors:
     return_message += txtmod.BOLD + txtmod.UNDERLINE + "Encountered errors:" + txtmod.ENDBOLD + txtmod.ENDUNDERLINE + txtmod.NEWLINE + txtmod.NEWLINE
     failed = True
 
-  for error in api_data['messages']['errors']:
+  for error in error_messages:
     return_message += "  - " + txtmod.FAIL + error + txtmod.ENDC + txtmod.NEWLINE
 
   if html_errors:
