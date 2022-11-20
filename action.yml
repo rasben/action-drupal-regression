@@ -1,7 +1,9 @@
 name: 'Drupal Regression'
 description: 'Using Drupal regression API.'
-icon: droplet
-color: blue
+branding:
+  icon: 'droplet'
+  color: 'blue'
+
 inputs:
   url:
     description: 'Test URL, to check existing data against'
@@ -9,9 +11,11 @@ inputs:
   work_dir:
     description: 'The work dir to save regressions in. - defaults to drupal-regression'
     default: 'drupal-regression'
+
 outputs:
   diff:
     description: 'The difference, if any'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
