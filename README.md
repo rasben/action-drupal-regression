@@ -8,6 +8,8 @@ See https://github.com/reload/drupal-regression for the required Drupal Module.
 
 ## Using the action
 
+You can either use the action alone, or use the full workflow, which sets relevant comments/action statuses.
+
 Example setup: https://github.com/reload/storypal/blob/main/.github/workflows/drupal-regression.yml
 
 ## Testing locally:

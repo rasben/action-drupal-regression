@@ -1,5 +1,7 @@
 name: 'Drupal Regression'
 description: 'Using Drupal regression API.'
+icon: droplet
+color: blue
 inputs:
   url:
     description: 'Test URL, to check existing data against'
