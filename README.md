@@ -16,7 +16,7 @@ Example setup: https://github.com/reload/storypal/blob/main/.github/workflows/dr
 
 - Have python3 + pip3 installed
 - `pip3 install install wheel colorama requests validators pytidylib`
-- `python3 compare.py --url=https://some-remote-api-url.com --workdir=drupal-regression`
+- `python3 compare.py --url=https://some-remote-api-url.com`
 
 If you want to test with the exact, markdown output that GitHub Action uses:
 

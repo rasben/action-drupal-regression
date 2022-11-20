@@ -34,14 +34,14 @@ jobs:
           edit-mode: replace
           reactions: ${{ steps.drupal-regression.outputs.reactions }}
       - uses: actions/checkout@v1
-      - uses: reload/action-platformsh-url@main
+      - uses: reload/action-platformsh-url@v2
         id: platformsh_url
         with:
           PLATFORMSH_ID: ${{ inputs.PLATFORMSH_ID }}
           PLATFORMSH_KEY: ${{ secrets.PLATFORMSH_KEY }}
       - name: Drupal Regression
         id: drupal-regression
-        uses: reload/action-drupal-regression@main
+        uses: reload/action-drupal-regression@v2
         with:
           url: ${{ steps.platformsh_url.outputs.url }}
           work_dir: ${{ inputs.WORK_DIR }}
