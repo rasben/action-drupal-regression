@@ -23,8 +23,12 @@ echo "$MESSAGE"
 
 # Remove newlines, as Github Comments dont like that..
 MESSAGE=${MESSAGE//$'\n'/}
+GITHUB_MESSAGE="$MESSAGE"
 
-GITHUB_MESSAGE="|   |   |%0D%0A|---|---|%0D%0A|$MESSAGE|$SIDE_MESSAGE|%0D%0A"
+if [[ -v SIDE_MESSAGE ]]
+then
+  GITHUB_MESSAGE="|   |   |%0D%0A|---|---|%0D%0A|$MESSAGE|$SIDE_MESSAGE|%0D%0A"
+fi
 
 echo "$GITHUB_MESSAGE"
 

@@ -270,7 +270,7 @@ def main():
 
 
   # Lines below basically just presents the results.
-  return_message += txtmod.BOLD + url + txtmod.ENDBOLD + txtmod.NEWLINE
+  return_message += txtmod.BOLD + api_url + txtmod.ENDBOLD + txtmod.NEWLINE
 
   failed = False
 
@@ -290,12 +290,12 @@ def main():
     return_message += txtmod.ENCODED_NEWLINE + txtmod.CODEEND + txtmod.ENCODED_NEWLINE
 
   if diffs:
-    return_message += txtmod.BOLD + txtmod.UNDERLINE + txtmod.NEWLINE + "Found diffs in following files:" + txtmod.ENDBOLD + txtmod.ENDUNDERLINE + txtmod.NEWLINE
+    return_message += txtmod.BOLD + txtmod.UNDERLINE + txtmod.NEWLINE + "There are differences between the codebase and test-environment:" + txtmod.ENDBOLD + txtmod.ENDUNDERLINE + txtmod.NEWLINE
 
     for diff in diffs:
       return_message += txtmod.NEWLINE + "  - " + txtmod.WARNING + diff + txtmod.ENDC
 
-    return_message += txtmod.NEWLINE + txtmod.NEWLINE + txtmod.BOLD + txtmod.UNDERLINE + "If the changes are correct, you can commit the changes after running:" + txtmod.NEWLINE + txtmod.ENDBOLD + txtmod.ENDUNDERLINE
+    return_message += txtmod.NEWLINE + txtmod.NEWLINE + txtmod.BOLD + txtmod.UNDERLINE + "If the differences reflects what you want, you can update your codebase with: " + txtmod.NEWLINE + txtmod.ENDBOLD + txtmod.ENDUNDERLINE
     return_message += txtmod.ENCODED_NEWLINE + txtmod.ENCODED_NEWLINE + txtmod.CODE + txtmod.ENCODED_NEWLINE
 
     return_message += "mkdir -p " + str(content_dir) + " && ( cd " + str(content_dir)
@@ -321,7 +321,7 @@ def main():
     failed = True
 
   if not diffs:
-    return_message += txtmod.BOLD + txtmod.OKGREEN + "No diffs encountered :)" + txtmod.ENDBOLD + txtmod.ENDC + txtmod.NEWLINE
+    return_message += txtmod.BOLD + txtmod.OKGREEN + "No difference between codebase and test-environment" + txtmod.ENDBOLD + txtmod.ENDC + txtmod.NEWLINE
 
   # If we have experienced no issues, we'll inform the user that all's good, and set
   # a STATUSOK that GithubActions can understand - otherwise we'll say STATUSFAIL.
