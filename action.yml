@@ -2,7 +2,7 @@ name: 'Drupal Regression'
 description: 'Using Drupal regression API.'
 inputs:
   url:
-    description: 'URL to check baseline against'
+    description: 'Test URL, to check existing data against'
     required: true
   work_dir:
     description: 'The work dir to save regressions in. - defaults to drupal-regression'
