@@ -4,7 +4,7 @@ GitHub action to be used in tandem with reload/drupal-regression Drupal Module, 
 
 Basically a HTML/text-based alternative to backstopJS.
 
-See https://github.com/reload/drupal-regression for the required Drupal Module.
+See https://github.com/rasben/drupal-regression for the required Drupal Module.
 
 ## Using the action
 
